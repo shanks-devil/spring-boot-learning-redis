@@ -13,16 +13,17 @@ import com.shanks.redis.learning.domain.Dept;
 @Mapper
 public interface DeptRepsoitory {
 
-	@Cacheable(value = "dept", key = "'listDept' + #p0")
+	@Cacheable(value = "listDept", key = "'listDept' + #p0")
 	List<Dept> listDept(Dept dept);
 
 	@Cacheable(value = "dept", key = "'findById' + #p0")
 	Dept findById(Long id);
 
-	@Caching(put = @CachePut(value = "dept", key = "'findById' + #p0.id"), evict = @CacheEvict(value = "dept", key = "'listDept'"))
+	// is not working
+	@Caching(put = @CachePut(value = "dept", key = "'findById' + #p0.id"), evict = @CacheEvict(value = "dept", allEntries = true))
 	void save(Dept dept);
 
 	@CacheEvict(value = "dept", key = "'findById' + #p0")
-	@Caching(evict = {@CacheEvict(value = "dept", key = "'findById' + #p0"), @CacheEvict(value = "dept", key = "'listDept'")})
+	@Caching(evict = {@CacheEvict(value = "dept", key = "'findById' + #p0"), @CacheEvict(value = "dept", allEntries = true)})
 	void delete(Long id);
 }
