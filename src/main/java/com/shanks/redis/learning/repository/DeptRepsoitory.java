@@ -20,10 +20,10 @@ public interface DeptRepsoitory {
 	Dept findById(Long id);
 
 	// is not working
-	@Caching(put = @CachePut(value = "dept", key = "'findById' + #p0.id"), evict = @CacheEvict(value = "dept", allEntries = true))
+	@Caching(put = @CachePut(value = "dept", key = "'findById' + #p0.id"), evict = @CacheEvict(value = "listDept", allEntries = true))
 	void save(Dept dept);
 
 	@CacheEvict(value = "dept", key = "'findById' + #p0")
-	@Caching(evict = {@CacheEvict(value = "dept", key = "'findById' + #p0"), @CacheEvict(value = "dept", allEntries = true)})
+	@Caching(evict = {@CacheEvict(value = "dept", key = "'findById' + #p0"), @CacheEvict(value = "listDept", allEntries = true)})
 	void delete(Long id);
 }
