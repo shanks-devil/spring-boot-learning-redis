@@ -26,6 +26,7 @@ public class RedisConfiguration {
 	}
 
 	@Bean
+	@ConfigurationProperties(prefix = "spring.cache.redis")
 	public RedisTemplate<String, String> redisTemplate(
 			RedisConnectionFactory factory) {
 		StringRedisTemplate template = new StringRedisTemplate(factory);
